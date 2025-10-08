@@ -1,4 +1,4 @@
-# EduCTX Integration: Bringing SD-JWT to Educational Credentials
+# EduCTX SD-JWT Integration: Bringing Selective Disclosure to Educational Credentials
 
 **Blockchain Lab:UM**
 
