@@ -1,0 +1,162 @@
+Masca Integrates SD-JWT: Selective Disclosure for Privacy-Preserving Credential Sharing
+Blockchain Lab:UM
+Blockchain Lab:UM
+
+Following
+6 min read
+·
+Feb 10, 2025
+2
+
+
+
+
+
+
+Step into the future of digital identity management. While Self-Sovereign Identity (SSI) empowers you with full control over your personal data, it still lacks privacy preserving mechanisms by default. Enter SD-JWT (Selective Disclosure JSON Web Token) — the revolutionary approach that lets you reveal only what’s necessary, safeguarding your privacy without compromising trust. It presents a bold leap forward in credential sharing that redefines the rules of engagement in the digital world.
+
+What is SD-JWT?
+SD-JWT stands for Selective Disclosure JSON Web Token. It is a mechanism that allows users to share specific claims from their credentials while keeping other claims private, enhancing privacy in digital interactions.
+
+The primary function of SD-JWT is to enable users (referred to as Holders) to disclose only the necessary claims from their credentials to Verifiers. Disclosing is achieved by including hashed versions of the claims in the token and allowing the Holder to present only the value of the claims they wish to disclose. This ensures that unrelated or sensitive information remains private while still allowing verification of the disclosed claims.
+
+SD-JWT can be used in various scenarios, including:
+
+Selective Age Disclosure: A user can share their age while keeping their address private, ensuring only that the necessary information is revealed.
+Citizenship Verification: A user can confirm their citizenship status without disclosing other personal details.
+Qualifications Sharing: Individuals can share proof of qualifications (like degrees or certifications) without exposing e.g., the final grade.
+SD-JWT is recognized as a key approach in the context of EUDIWs (European Digital Identity Wallet), and is referenced in the EUDI reference specification.
+
+How does SD-JWT work?
+Issuer issues an SD-JWT verifiable credential (referred to as VC) that contains various claims about the Holder. Instead of storing plaintext values, the issuer replaces them with hashed digest where each claim is hashed with a unique salt value, ensuring privacy and integrity.
+
+Regular VC:
+
+{  
+ "type": ["VerifiableCredential", "MascaUserCredential"],  
+ "credentialSubject": {  
+  "id": "did:jwk:eyJhbGciOiJFUzI1NksiLCJjcnYiOiJzZWNwMjU2azEiLCJrdHkiOiJFQyIsInVzZSI6InNpZyIsIngiOiJXZ0gxbFhRN2FTY0RmNDRURzlyYjJDWDZaQi0xcHlMd01TZl8zdVdhM3pFIiwieSI6ImlfSmJZNTdHREYtanh4bUpkZmUzLVBIM2tQTkNyelVjSnVNcnJ6cTJKdkEifQ#045a01f595743b6927037f8e131bdadbd825fa641fb5a722f03127ffdee59adf318bf25b639ec60c5fa3c7198975f7b7f8f1f790f342af351c26e32baf3ab626f0",
+
+  "type": "Regular User",  
+  "name": "John",  
+  "surname": "Doe",  
+  "age": 25  
+ },  
+ "credentialSchema": {  
+  "id": "https://beta.api.schemas.serto.id/v1/public/program-completion-certificate/1.0/json-schema.json",
+
+  "type": "JsonSchemaValidator2018"  
+ },  
+ "@context": [  
+  "https://www.w3.org/2018/credentials/v1",  
+  "https://beta.api.schemas.serto.id/v1/public/program-completion-certificate/1.0/ld-context.json"
+
+ ]  
+}
+SD-JWT VC:
+
+{  
+  "vct": "VerifiableCredential,MascaUserCredential",  
+  "id": "7f86f0573a1711a9111289dec496e4c4",  
+  "iss": "did:jwk:eyJhbGciOiJFUzI1NksiLCJjcnYiOiJzZWNwMjU2azEiLCJrdHkiOiJFQyIsInVzZSI6InNpZyIsIngiOiJXZ0gxbFhRN2FTY0RmNDRURzlyYjJDWDZaQi0xcHlMd01TZl8zdVdhM3pFIiwieSI6ImlfSmJZNTdHREYtanh4bUpkZmUzLVBIM2tQTkNyelVjSnVNcnJ6cTJKdkEifQ#045a01f595743b6927037f8e131bdadbd825fa641fb5a722f03127ffdee59adf318bf25b639ec60c5fa3c7198975f7b7f8f1f790f342af351c26e32baf3ab626f0",
+
+  "iat": 1738150831,  
+  "sub": "did:jwk:eyJhbGciOiJFUzI1NksiLCJjcnYiOiJzZWNwMjU2azEiLCJrdHkiOiJFQyIsInVzZSI6InNpZyIsIngiOiJXZ0gxbFhRN2FTY0RmNDRURzlyYjJDWDZaQi0xcHlMd01TZl8zdVdhM3pFIiwieSI6ImlfSmJZNTdHREYtanh4bUpkZmUzLVBIM2tQTkNyelVjSnVNcnJ6cTJKdkEifQ#045a01f595743b6927037f8e131bdadbd825fa641fb5a722f03127ffdee59adf318bf25b639ec60c5fa3c7198975f7b7f8f1f790f342af351c26e32baf3ab626f0",
+
+  "credentialSubject": {  
+   "_sd": [  
+    "8oBj4cxKQKSkxmcVZ8lQ75Fhh6TUnIgYSd36lXJL4Gg",  
+    "L1hDpYgip-pRxnR8Qb3WHwXmxq9hDOukxBPc8PBoD5E",  
+    "TsJEKGlTifn-BcliWdNsEAmmQRLwE_wrvCWFqcKYoVw",  
+    "_odwkWvPZ69_tqxv1C8GprP7cgPvQb-SdU-0euDYktc",  
+    "fbacwwAq-5tBZx1jf7IiFS628jzaF5ewpBSHbiHisCE"  
+   ]  
+  },  
+  "@context": [  
+   "https://www.w3.org/2018/credentials/v1",  
+   "https://beta.api.schemas.serto.id/v1/public/program-completion-certificate/1.0/ld-context.json"
+
+  ],  
+  "credentialSchema": {  
+   "id": "https://beta.api.schemas.serto.id/v1/public/program-completion-certificate/1.0/json-schema.json",
+
+   "type": "JsonSchemaValidator2018"  
+  },  
+  "_sd_alg": "sha-256"  
+}
+Encoded Issuer signed SD-JWT VC (without any disclosed credential):
+
+eyJhbGciOiJFUzI1NiJ9.eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvMjAxOC9jcmVkZW50aWFscy92MSIsImh0dHBzOi8vYmV0YS5hcGkuc2NoZW1hcy5zZXJ0by5pZC92MS9wdWJsaWMvcHJvZ3JhbS1jb21wbGV0aW9uLWNlcnRpZmljYXRlLzEuMC9sZC1jb250ZXh0Lmpzb24iXSwiaWQiOiI3Zjg2ZjA1NzNhMTcxMWE5MTExMjg5ZGVjNDk2ZTRjNCIsInZjdCI6IlZlcmlmaWFibGVDcmVkZW50aWFsLE1hc2NhVXNlckNyZWRlbnRpYWwiLCJpc3MiOiJkaWQ6andrOmV5SmhiR2NpT2lKRlV6STFOa3NpTENKamNuWWlPaUp6WldOd01qVTJhekVpTENKcmRIa2lPaUpGUXlJc0luVnpaU0k2SW5OcFp5SXNJbmdpT2lKWFowZ3hiRmhSTjJGVFkwUm1ORFJVUnpseVlqSkRXRFphUWkweGNIbE1kMDFUWmw4emRWZGhNM3BGSWl3aWVTSTZJbWxmU21KWk5UZEhSRVl0YW5oNGJVcGtabVV6TFZCSU0ydFFUa055ZWxWalNuVk5jbko2Y1RKS2RrRWlmUSMwNDVhMDFmNTk1NzQzYjY5MjcwMzdmOGUxMzFiZGFkYmQ4MjVmYTY0MWZiNWE3MjJmMDMxMjdmZmRlZTU5YWRmMzE4YmYyNWI2MzllYzYwYzVmYTNjNzE5ODk3NWY3YjdmOGYxZjc5MGYzNDJhZjM1MWMyNmUzMmJhZjNhYjYyNmYwIiwiaWF0IjoxNzM4MTUwODMxLCJzdWIiOiJkaWQ6andrOmV5SmhiR2NpT2lKRlV6STFOa3NpTENKamNuWWlPaUp6WldOd01qVTJhekVpTENKcmRIa2lPaUpGUXlJc0luVnpaU0k2SW5OcFp5SXNJbmdpT2lKWFowZ3hiRmhSTjJGVFkwUm1ORFJVUnpseVlqSkRXRFphUWkweGNIbE1kMDFUWmw4emRWZGhNM3BGSWl3aWVTSTZJbWxmU21KWk5UZEhSRVl0YW5oNGJVcGtabVV6TFZCSU0ydFFUa055ZWxWalNuVk5jbko2Y1RKS2RrRWlmUSMwNDVhMDFmNTk1NzQzYjY5MjcwMzdmOGUxMzFiZGFkYmQ4MjVmYTY0MWZiNWE3MjJmMDMxMjdmZmRlZTU5YWRmMzE4YmYyNWI2MzllYzYwYzVmYTNjNzE5ODk3NWY3YjdmOGYxZjc5MGYzNDJhZjM1MWMyNmUzMmJhZjNhYjYyNmYwIiwiY3JlZGVudGlhbFN1YmplY3QiOnsiX3NkIjpbIjhvQmo0Y3hLUUtTa3htY1ZaOGxRNzVGaGg2VFVuSWdZU2QzNmxYSkw0R2ciLCJMMWhEcFlnaXAtcFJ4blI4UWIzV0h3WG14cTloRE91a3hCUGM4UEJvRDVFIiwiVHNKRUtHbFRpZm4tQmNsaVdkTnNFQW1tUVJMd0Vfd3J2Q1dGcWNLWW9WdyIsIl9vZHdrV3ZQWjY5X3RxeHYxQzhHcHJQN2NnUHZRYi1TZFUtMGV1RFlrdGMiLCJmYmFjd3dBcS01dEJaeDFqZjdJaUZTNjI4anphRjVld3BCU0hiaUhpc0NFIl19LCJjcmVkZW50aWFsU2NoZW1hIjp7ImlkIjoiaHR0cHM6Ly9iZXRhLmFwaS5zY2hlbWFzLnNlcnRvLmlkL3YxL3B1YmxpYy9wcm9ncmFtLWNvbXBsZXRpb24tY2VydGlmaWNhdGUvMS4wL2pzb24tc2NoZW1hLmpzb24iLCJ0eXBlIjoiSnNvblNjaGVtYVZhbGlkYXRvcjIwMTgifSwiX3NkX2FsZyI6InNoYS0yNTYifQ.z0W73Yln_rT1BdVx8-XovkHDNA5LJmAqRAZy8JX5dtS9FVEl_Bx8Sfi5iXPWZ_ByzvIJ7VP2kJEMrPJ79K9SXw
+Since the Holder must be aware of the values used to calculate the digest of the claims, the Issuer automatically appends the claim disclosure values to the Issuer-signed JWT. This ensures that the Holder has access to the necessary values and can selectively disclose claims when needed.
+
+Encoded SD-JWT (with appended disclosure values):
+
+eyJhbGciOiJFUzI1NiJ9.eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvMjAxOC9jcmVkZW50aWFscy92MSIsImh0dHBzOi8vYmV0YS5hcGkuc2NoZW1hcy5zZXJ0by5pZC92MS9wdWJsaWMvcHJvZ3JhbS1jb21wbGV0aW9uLWNlcnRpZmljYXRlLzEuMC9sZC1jb250ZXh0Lmpzb24iXSwiaWQiOiI3Zjg2ZjA1NzNhMTcxMWE5MTExMjg5ZGVjNDk2ZTRjNCIsInZjdCI6IlZlcmlmaWFibGVDcmVkZW50aWFsLE1hc2NhVXNlckNyZWRlbnRpYWwiLCJpc3MiOiJkaWQ6andrOmV5SmhiR2NpT2lKRlV6STFOa3NpTENKamNuWWlPaUp6WldOd01qVTJhekVpTENKcmRIa2lPaUpGUXlJc0luVnpaU0k2SW5OcFp5SXNJbmdpT2lKWFowZ3hiRmhSTjJGVFkwUm1ORFJVUnpseVlqSkRXRFphUWkweGNIbE1kMDFUWmw4emRWZGhNM3BGSWl3aWVTSTZJbWxmU21KWk5UZEhSRVl0YW5oNGJVcGtabVV6TFZCSU0ydFFUa055ZWxWalNuVk5jbko2Y1RKS2RrRWlmUSMwNDVhMDFmNTk1NzQzYjY5MjcwMzdmOGUxMzFiZGFkYmQ4MjVmYTY0MWZiNWE3MjJmMDMxMjdmZmRlZTU5YWRmMzE4YmYyNWI2MzllYzYwYzVmYTNjNzE5ODk3NWY3YjdmOGYxZjc5MGYzNDJhZjM1MWMyNmUzMmJhZjNhYjYyNmYwIiwiaWF0IjoxNzM4MTUwODMxLCJzdWIiOiJkaWQ6andrOmV5SmhiR2NpT2lKRlV6STFOa3NpTENKamNuWWlPaUp6WldOd01qVTJhekVpTENKcmRIa2lPaUpGUXlJc0luVnpaU0k2SW5OcFp5SXNJbmdpT2lKWFowZ3hiRmhSTjJGVFkwUm1ORFJVUnpseVlqSkRXRFphUWkweGNIbE1kMDFUWmw4emRWZGhNM3BGSWl3aWVTSTZJbWxmU21KWk5UZEhSRVl0YW5oNGJVcGtabVV6TFZCSU0ydFFUa055ZWxWalNuVk5jbko2Y1RKS2RrRWlmUSMwNDVhMDFmNTk1NzQzYjY5MjcwMzdmOGUxMzFiZGFkYmQ4MjVmYTY0MWZiNWE3MjJmMDMxMjdmZmRlZTU5YWRmMzE4YmYyNWI2MzllYzYwYzVmYTNjNzE5ODk3NWY3YjdmOGYxZjc5MGYzNDJhZjM1MWMyNmUzMmJhZjNhYjYyNmYwIiwiY3JlZGVudGlhbFN1YmplY3QiOnsiX3NkIjpbIjhvQmo0Y3hLUUtTa3htY1ZaOGxRNzVGaGg2VFVuSWdZU2QzNmxYSkw0R2ciLCJMMWhEcFlnaXAtcFJ4blI4UWIzV0h3WG14cTloRE91a3hCUGM4UEJvRDVFIiwiVHNKRUtHbFRpZm4tQmNsaVdkTnNFQW1tUVJMd0Vfd3J2Q1dGcWNLWW9WdyIsIl9vZHdrV3ZQWjY5X3RxeHYxQzhHcHJQN2NnUHZRYi1TZFUtMGV1RFlrdGMiLCJmYmFjd3dBcS01dEJaeDFqZjdJaUZTNjI4anphRjVld3BCU0hiaUhpc0NFIl19LCJjcmVkZW50aWFsU2NoZW1hIjp7ImlkIjoiaHR0cHM6Ly9iZXRhLmFwaS5zY2hlbWFzLnNlcnRvLmlkL3YxL3B1YmxpYy9wcm9ncmFtLWNvbXBsZXRpb24tY2VydGlmaWNhdGUvMS4wL2pzb24tc2NoZW1hLmpzb24iLCJ0eXBlIjoiSnNvblNjaGVtYVZhbGlkYXRvcjIwMTgifSwiX3NkX2FsZyI6InNoYS0yNTYifQ.z0W73Yln_rT1BdVx8-XovkHDNA5LJmAqRAZy8JX5dtS9FVEl_Bx8Sfi5iXPWZ_ByzvIJ7VP2kJEMrPJ79K9SXw~WyIwMTU3NTliZDQyMGMyNTViIiwiaWQiLCJkaWQ6andrOjEyMzQiXQ~WyI0MzA2MzdiNWJlMmY5Y2ViIiwidHlwZSIsIlJlZ3VsYXIgVXNlciJd~WyI1ZmI5MWY5NTNjYzk1ZWQ2IiwibmFtZSIsIkpvaG4iXQ~WyJlMjdkMjI3YmY5Yjc5YTc1Iiwic3VybmFtZSIsIkRvZSJd~WyJlZjJiOWQyN2VlYTE0OGNhIiwiYWdlIiwyNV0~
+You can copy and paste the SD-JWT into SD-JWT Explorer to inspect its structure and see which disclosure values are appended.
+
+Once the holder owns the SD-JWT-based VC, he/she can now willingly disclose to the verifier only some of the attribute claims in the original VC, thus producing an SD-JWT-based VP.
+
+Holder presents VC with providing signed SD-JWT along with revealing the disclosure values [salt + claim name + claim value] of the specific claims they wish to disclose. Claim disclosure values are JSON encoded (producing an UTF-8 string), base64url encoded and appended to the SD-JWT and separated by a tilde ~.
+
+That happens in the same way that the Issuer appends disclosure values when issuing VC, with the only difference being the Holder now decides which values they want to disclose while the undisclosed values are removed.
+
+<signed-SD-JWT>~<Disclosure-1>~<Disclosure-2>~<Disclosure-N>
+Meaning that if we would want to disclose only name and the age, the SD-JWT value would look like this:
+
+eyJhbGciOiJFUzI1NiJ9.eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvMjAxOC9jcmVkZW50aWFscy92MSIsImh0dHBzOi8vYmV0YS5hcGkuc2NoZW1hcy5zZXJ0by5pZC92MS9wdWJsaWMvcHJvZ3JhbS1jb21wbGV0aW9uLWNlcnRpZmljYXRlLzEuMC9sZC1jb250ZXh0Lmpzb24iXSwiaWQiOiI3Zjg2ZjA1NzNhMTcxMWE5MTExMjg5ZGVjNDk2ZTRjNCIsInZjdCI6IlZlcmlmaWFibGVDcmVkZW50aWFsLE1hc2NhVXNlckNyZWRlbnRpYWwiLCJpc3MiOiJkaWQ6andrOmV5SmhiR2NpT2lKRlV6STFOa3NpTENKamNuWWlPaUp6WldOd01qVTJhekVpTENKcmRIa2lPaUpGUXlJc0luVnpaU0k2SW5OcFp5SXNJbmdpT2lKWFowZ3hiRmhSTjJGVFkwUm1ORFJVUnpseVlqSkRXRFphUWkweGNIbE1kMDFUWmw4emRWZGhNM3BGSWl3aWVTSTZJbWxmU21KWk5UZEhSRVl0YW5oNGJVcGtabVV6TFZCSU0ydFFUa055ZWxWalNuVk5jbko2Y1RKS2RrRWlmUSMwNDVhMDFmNTk1NzQzYjY5MjcwMzdmOGUxMzFiZGFkYmQ4MjVmYTY0MWZiNWE3MjJmMDMxMjdmZmRlZTU5YWRmMzE4YmYyNWI2MzllYzYwYzVmYTNjNzE5ODk3NWY3YjdmOGYxZjc5MGYzNDJhZjM1MWMyNmUzMmJhZjNhYjYyNmYwIiwiaWF0IjoxNzM4MTUwODMxLCJzdWIiOiJkaWQ6andrOmV5SmhiR2NpT2lKRlV6STFOa3NpTENKamNuWWlPaUp6WldOd01qVTJhekVpTENKcmRIa2lPaUpGUXlJc0luVnpaU0k2SW5OcFp5SXNJbmdpT2lKWFowZ3hiRmhSTjJGVFkwUm1ORFJVUnpseVlqSkRXRFphUWkweGNIbE1kMDFUWmw4emRWZGhNM3BGSWl3aWVTSTZJbWxmU21KWk5UZEhSRVl0YW5oNGJVcGtabVV6TFZCSU0ydFFUa055ZWxWalNuVk5jbko2Y1RKS2RrRWlmUSMwNDVhMDFmNTk1NzQzYjY5MjcwMzdmOGUxMzFiZGFkYmQ4MjVmYTY0MWZiNWE3MjJmMDMxMjdmZmRlZTU5YWRmMzE4YmYyNWI2MzllYzYwYzVmYTNjNzE5ODk3NWY3YjdmOGYxZjc5MGYzNDJhZjM1MWMyNmUzMmJhZjNhYjYyNmYwIiwiY3JlZGVudGlhbFN1YmplY3QiOnsiX3NkIjpbIjhvQmo0Y3hLUUtTa3htY1ZaOGxRNzVGaGg2VFVuSWdZU2QzNmxYSkw0R2ciLCJMMWhEcFlnaXAtcFJ4blI4UWIzV0h3WG14cTloRE91a3hCUGM4UEJvRDVFIiwiVHNKRUtHbFRpZm4tQmNsaVdkTnNFQW1tUVJMd0Vfd3J2Q1dGcWNLWW9WdyIsIl9vZHdrV3ZQWjY5X3RxeHYxQzhHcHJQN2NnUHZRYi1TZFUtMGV1RFlrdGMiLCJmYmFjd3dBcS01dEJaeDFqZjdJaUZTNjI4anphRjVld3BCU0hiaUhpc0NFIl19LCJjcmVkZW50aWFsU2NoZW1hIjp7ImlkIjoiaHR0cHM6Ly9iZXRhLmFwaS5zY2hlbWFzLnNlcnRvLmlkL3YxL3B1YmxpYy9wcm9ncmFtLWNvbXBsZXRpb24tY2VydGlmaWNhdGUvMS4wL2pzb24tc2NoZW1hLmpzb24iLCJ0eXBlIjoiSnNvblNjaGVtYVZhbGlkYXRvcjIwMTgifSwiX3NkX2FsZyI6InNoYS0yNTYifQ.z0W73Yln_rT1BdVx8-XovkHDNA5LJmAqRAZy8JX5dtS9FVEl_Bx8Sfi5iXPWZ_ByzvIJ7VP2kJEMrPJ79K9SXw~WyI1ZmI5MWY5NTNjYzk1ZWQ2IiwibmFtZSIsIkpvaG4iXQ~WyJlZjJiOWQyN2VlYTE0OGNhIiwiYWdlIiwyNV0
+Appended values for disclosing:
+
+~WyI1ZmI5MWY5NTNjYzk1ZWQ2IiwibmFtZSIsIkpvaG4iXQ
+~WyJlZjJiOWQyN2VlYTE0OGNhIiwiYWdlIiwyNV0
+Decoded appended values:
+
+[“5fb91f953cc95ed6”, “name”, “John”]
+
+[“ef2b9d27eea148ca”, “age”, 25]
+
+Verifier upon receiving SD-JWT+KB presentation verifies signature and ensures that disclosed claims match their corresponding hashes. As it stands in current version of IETF, key binding is an optional feature and can be required by the Verifier.
+
+Key binding is a mechanism that ensures the presenter is legitimate Holder of the disclosed credential. It is tied to SD-JWT when it’s payload, which includes a hash of the SD-JWT, a nonce to ensure freshness and an audience value, is signed using the key that is included in the SD-JWT payload.
+
+SD-JWT+KB:
+
+eyJhbGciOiJFUzI1NiJ9.eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvMjAxOC9jcmVkZW50aWFscy92MSIsImh0dHBzOi8vYmV0YS5hcGkuc2NoZW1hcy5zZXJ0by5pZC92MS9wdWJsaWMvcHJvZ3JhbS1jb21wbGV0aW9uLWNlcnRpZmljYXRlLzEuMC9sZC1jb250ZXh0Lmpzb24iXSwiaWQiOiJhZGVhYzBlMmQ3MzJlYjBhMTI4YTE5YmE1NGUyMGVlMyIsInZjdCI6IlZlcmlmaWFibGVDcmVkZW50aWFsLE1hc2NhVXNlckNyZWRlbnRpYWwiLCJpc3MiOiJkaWQ6andrOmV5SmhiR2NpT2lKRlV6STFOa3NpTENKamNuWWlPaUp6WldOd01qVTJhekVpTENKcmRIa2lPaUpGUXlJc0luVnpaU0k2SW5OcFp5SXNJbmdpT2lKWFowZ3hiRmhSTjJGVFkwUm1ORFJVUnpseVlqSkRXRFphUWkweGNIbE1kMDFUWmw4emRWZGhNM3BGSWl3aWVTSTZJbWxmU21KWk5UZEhSRVl0YW5oNGJVcGtabVV6TFZCSU0ydFFUa055ZWxWalNuVk5jbko2Y1RKS2RrRWlmUSMwNDVhMDFmNTk1NzQzYjY5MjcwMzdmOGUxMzFiZGFkYmQ4MjVmYTY0MWZiNWE3MjJmMDMxMjdmZmRlZTU5YWRmMzE4YmYyNWI2MzllYzYwYzVmYTNjNzE5ODk3NWY3YjdmOGYxZjc5MGYzNDJhZjM1MWMyNmUzMmJhZjNhYjYyNmYwIiwiaWF0IjoxNzM4MjI0MjgwLCJzdWIiOiJkaWQ6andrOmV5SmhiR2NpT2lKRlV6STFOa3NpTENKamNuWWlPaUp6WldOd01qVTJhekVpTENKcmRIa2lPaUpGUXlJc0luVnpaU0k2SW5OcFp5SXNJbmdpT2lKWFowZ3hiRmhSTjJGVFkwUm1ORFJVUnpseVlqSkRXRFphUWkweGNIbE1kMDFUWmw4emRWZGhNM3BGSWl3aWVTSTZJbWxmU21KWk5UZEhSRVl0YW5oNGJVcGtabVV6TFZCSU0ydFFUa055ZWxWalNuVk5jbko2Y1RKS2RrRWlmUSMwNDVhMDFmNTk1NzQzYjY5MjcwMzdmOGUxMzFiZGFkYmQ4MjVmYTY0MWZiNWE3MjJmMDMxMjdmZmRlZTU5YWRmMzE4YmYyNWI2MzllYzYwYzVmYTNjNzE5ODk3NWY3YjdmOGYxZjc5MGYzNDJhZjM1MWMyNmUzMmJhZjNhYjYyNmYwIiwiY3JlZGVudGlhbFN1YmplY3QiOnsiX3NkIjpbIjRDLWRfOFdnNzhJT0F2R2VSVGZlRUN0MEFaUFJzbHhsQTJjSWI2YU94cFUiLCI0bS1zSkZKWnVqbFUtQndhdkYyczFid2lzQ2JFUmhjTHVvOTB1ZjJWTGx3IiwiN2toNkVpMUNxenl3TFFCdGtZNEpoTzB5b2g4dHRIRGg5TVBOY0ljaVVxTSIsIk14SXRveDlpMG5LZFFfSkU0aHRFc1h6eERqODRBcmtFd1FYM1U4U1NHUVUiLCJVdWpES2ZuVDRJQ0xaVXVaLWRMZ2x6ajh2dkhIVTJkb1BVM1pfX2tXMzY0Il19LCJjcmVkZW50aWFsU2NoZW1hIjp7ImlkIjoiaHR0cHM6Ly9iZXRhLmFwaS5zY2hlbWFzLnNlcnRvLmlkL3YxL3B1YmxpYy9wcm9ncmFtLWNvbXBsZXRpb24tY2VydGlmaWNhdGUvMS4wL2pzb24tc2NoZW1hLmpzb24iLCJ0eXBlIjoiSnNvblNjaGVtYVZhbGlkYXRvcjIwMTgifSwiX3NkX2FsZyI6InNoYS0yNTYifQ.z0W73Yln_rT1BdVx8-XovkHDNA5LJmAqRAZy8JX5dtS9FVEl_Bx8Sfi5iXPWZ_ByzvIJ7VP2kJEMrPJ79K9SXw~WyIwZThhOTYwNmE5YzI4MGE2IiwibmFtZSIsIkpvaG4iXQ~WyI3M2Q4ZmVlMjM3NGI2ZjE4IiwiYWdlIiwyNV0~eyJ0eXAiOiJrYitqd3QiLCJhbGciOiJFUzI1NiJ9.eyJpYXQiOjE3MzgyMjUxMzYsImF1ZCI6IiIsIm5vbmNlIjoiN2QxZGJiYTBiMWU5NzU1MDI3NDMxM2E5ZmU1ZjIxMTkiLCJzZF9oYXNoIjoib1B2U0RFUzUxakUtcDJfR1hVSWpvd19jQTNXRnR1cVFCUWk3WHRyeE5BOCJ9.vZH-SPgXYZSvnsobQ36PVRJ_YtN2jcvh_tFs8MMABNBajiG8CkyXsCRqxGIgixMWsMUviUWWjPATaRp2tywR_Q
+Integration in Masca
+Masca, a flagship of Blockchain Lab:UM, is the MetaMask Snap based SSI wallet that enhances decentralized identity management by integrating functionalities for Decentralized Identifiers (DIDs) and Verifiable Credentials (VCs) directly into the MetaMask wallet.
+
+For more details about Masca, check out our previous blog posts.
+
+We have now added SD-JWT support using the OpenWallet Foundation’s library. Users can now selectively disclose claims and present them to the Verifiers. Image below showcases the user selecting claims that he wants to disclose.
+
+
+Presentation creation in Masca
+Previsouly we also added the publicly shareable link support to the Masca, enabling users who want to showcase their VCs to the public (e.g., LinkedIn). How users can also create such shareable links and share their credential, while ensuring that only selected claims are disclosed. Image below presents the shared SD-JWT credential.
+
+
+Verifiable Presentation in Masca
+In shared credential above, we can see that the name and age are disclosed. If we take a look into credential subject (_sd) values, we can see that there are only hashed values.
+
+
+Hashed values
+And if we take a look inside a disclosed name, it reveals the actual data needed for verifying the claim.
+
+
+Disclosed values
+Try the SD-JWT today on Masca Dapp!
+
+Comparison SD-JWT with BBS+ and ZKP
+SD-JWT: Uses hashed claims with salt values, allowing users to selectively disclose information.
+
+BBS+ Signatures: A cryptographic scheme that enables unlinkable selective disclosure, meaning a user can reveal specific claims from a credential without revealing whether they come from the same credential across different interactions. Unlike SD-JWT, BBS+ offers multi-message signatures, making it ideal for use cases requiring strong anonymity.
+
+Zero-Knowledge Proofs (ZKP): Allows users to prove something (e.g., being over 18) without revealing any underlying data. ZKPs provide the highest level of privacy and anonymity but are computationally intensive and require specialized cryptographic infrastructure.
+
+SD-JWT is just one of several approaches for selective disclosure and it’s more practical for real world adoption due to compatibility with existing JWT.
+
+Conclusion
+With the integration of SD-JWT into Masca using the OpenWallet Foundation’s sd-jwt-js library, we enabled selective disclosure of Verifiable Credentials directly within MetaMask.
+
+Masca users can now hold and selectively present credentials based on their specific needs, whether for age verification, qualification sharing, or identity confirmation without unnecessary data exposure.
+
+Looking ahead, future improvements could include support for additional selective disclosure mechanisms, such as BBS+ signatures or Zero-Knowledge Proofs (ZKPs), further enhancing privacy-preserving identity management.
+
